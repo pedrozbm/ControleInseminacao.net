@@ -1,0 +1,51 @@
+﻿@model ControleInseminacao.net.Models.Reprodutor
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Reprodutor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FK_Rep_IDRaca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FK_Rep_IDRaca)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FK_Rep_IDFazenda)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FK_Rep_IDFazenda)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDRep)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDRep)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.IDRep */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

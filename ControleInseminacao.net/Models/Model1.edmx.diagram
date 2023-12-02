@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d389ba0826c342efb9fd92e7d4afb889" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="ControleInseminacaoModel.Bezerro" Width="1.5" PointX="5.25" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ControleInseminacaoModel.Fazenda" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="ControleInseminacaoModel.IDRaca" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ControleInseminacaoModel.Inseminacao" Width="1.5" PointX="5.25" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ControleInseminacaoModel.Reprodutor" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ControleInseminacaoModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ControleInseminacaoModel.Vaca" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
+        <AssociationConnector Association="ControleInseminacaoModel.FK_Bezerro_IDRaca" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleInseminacaoModel.FK_Bezerro_IDVaca" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleInseminacaoModel.FK_Bezerro_Inseminacao" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleInseminacaoModel.FK_Bezerro_Reprodutor" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleInseminacaoModel.FK_Inseminacao_Fazenda" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleInseminacaoModel.FK_Reprodutor_IDRaca" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleInseminacaoModel.FK_Vaca_IDRaca" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleInseminacaoModel.FK_Inseminacao_Reprodutor" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleInseminacaoModel.FK_Inseminacao_Vaca" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleInseminacaoModel.FK_Rep_IDFazenda" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

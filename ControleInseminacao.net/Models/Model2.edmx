@@ -1,0 +1,629 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ControleInseminacaoModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bezerro">
+          <Key>
+            <PropertyRef Name="IDBezerro" />
+          </Key>
+          <Property Name="Sexo" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="FK_Bezerro_IDRaca" Type="int" Nullable="false" />
+          <Property Name="DataNascimento" Type="date" Nullable="false" />
+          <Property Name="FK_Bezerro_IDIns" Type="int" Nullable="false" />
+          <Property Name="FK_Bezerro_IDRep" Type="int" Nullable="false" />
+          <Property Name="IDBezerro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_Bezerro_IDVaca" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fazenda">
+          <Key>
+            <PropertyRef Name="IDFazenda" />
+          </Key>
+          <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IDFazenda" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IDRaca">
+          <Key>
+            <PropertyRef Name="IDRaca" />
+          </Key>
+          <Property Name="IDRaca" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Inseminacao">
+          <Key>
+            <PropertyRef Name="IDInseminacao" />
+          </Key>
+          <Property Name="FK_Inseminacao_IDRep" Type="int" Nullable="false" />
+          <Property Name="FK_Inseminacao_IDFazenda" Type="int" Nullable="false" />
+          <Property Name="IDInseminacao" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_Inseminacao_IDVaca" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reprodutor">
+          <Key>
+            <PropertyRef Name="IDRep" />
+          </Key>
+          <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FK_Rep_IDRaca" Type="int" Nullable="false" />
+          <Property Name="FK_Rep_IDFazenda" Type="int" Nullable="false" />
+          <Property Name="IDRep" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Vaca">
+          <Key>
+            <PropertyRef Name="IDVaca" />
+          </Key>
+          <Property Name="FK_Vaca_IDRaca" Type="int" Nullable="false" />
+          <Property Name="IDVaca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FK_Vaca_IDFazenda" Type="int" />
+        </EntityType>
+        <Association Name="FK_Bezerro_IDRaca">
+          <End Role="IDRaca" Type="Self.IDRaca" Multiplicity="1" />
+          <End Role="Bezerro" Type="Self.Bezerro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IDRaca">
+              <PropertyRef Name="IDRaca" />
+            </Principal>
+            <Dependent Role="Bezerro">
+              <PropertyRef Name="FK_Bezerro_IDRaca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bezerro_IDVaca">
+          <End Role="Vaca" Type="Self.Vaca" Multiplicity="1" />
+          <End Role="Bezerro" Type="Self.Bezerro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vaca">
+              <PropertyRef Name="IDVaca" />
+            </Principal>
+            <Dependent Role="Bezerro">
+              <PropertyRef Name="FK_Bezerro_IDVaca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bezerro_Inseminacao">
+          <End Role="Inseminacao" Type="Self.Inseminacao" Multiplicity="1" />
+          <End Role="Bezerro" Type="Self.Bezerro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inseminacao">
+              <PropertyRef Name="IDInseminacao" />
+            </Principal>
+            <Dependent Role="Bezerro">
+              <PropertyRef Name="FK_Bezerro_IDIns" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bezerro_Reprodutor">
+          <End Role="Reprodutor" Type="Self.Reprodutor" Multiplicity="1" />
+          <End Role="Bezerro" Type="Self.Bezerro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reprodutor">
+              <PropertyRef Name="IDRep" />
+            </Principal>
+            <Dependent Role="Bezerro">
+              <PropertyRef Name="FK_Bezerro_IDRep" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inseminacao_Fazenda">
+          <End Role="Fazenda" Type="Self.Fazenda" Multiplicity="1" />
+          <End Role="Inseminacao" Type="Self.Inseminacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fazenda">
+              <PropertyRef Name="IDFazenda" />
+            </Principal>
+            <Dependent Role="Inseminacao">
+              <PropertyRef Name="FK_Inseminacao_IDFazenda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inseminacao_Reprodutor">
+          <End Role="Reprodutor" Type="Self.Reprodutor" Multiplicity="1" />
+          <End Role="Inseminacao" Type="Self.Inseminacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reprodutor">
+              <PropertyRef Name="IDRep" />
+            </Principal>
+            <Dependent Role="Inseminacao">
+              <PropertyRef Name="FK_Inseminacao_IDRep" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inseminacao_Vaca">
+          <End Role="Vaca" Type="Self.Vaca" Multiplicity="1" />
+          <End Role="Inseminacao" Type="Self.Inseminacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vaca">
+              <PropertyRef Name="IDVaca" />
+            </Principal>
+            <Dependent Role="Inseminacao">
+              <PropertyRef Name="FK_Inseminacao_IDVaca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rep_IDFazenda">
+          <End Role="Fazenda" Type="Self.Fazenda" Multiplicity="1" />
+          <End Role="Reprodutor" Type="Self.Reprodutor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fazenda">
+              <PropertyRef Name="IDFazenda" />
+            </Principal>
+            <Dependent Role="Reprodutor">
+              <PropertyRef Name="FK_Rep_IDFazenda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reprodutor_IDRaca">
+          <End Role="IDRaca" Type="Self.IDRaca" Multiplicity="1" />
+          <End Role="Reprodutor" Type="Self.Reprodutor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IDRaca">
+              <PropertyRef Name="IDRaca" />
+            </Principal>
+            <Dependent Role="Reprodutor">
+              <PropertyRef Name="FK_Rep_IDRaca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vaca_IDFazenda">
+          <End Role="Fazenda" Type="Self.Fazenda" Multiplicity="0..1" />
+          <End Role="Vaca" Type="Self.Vaca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fazenda">
+              <PropertyRef Name="IDFazenda" />
+            </Principal>
+            <Dependent Role="Vaca">
+              <PropertyRef Name="FK_Vaca_IDFazenda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vaca_IDRaca">
+          <End Role="IDRaca" Type="Self.IDRaca" Multiplicity="1" />
+          <End Role="Vaca" Type="Self.Vaca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IDRaca">
+              <PropertyRef Name="IDRaca" />
+            </Principal>
+            <Dependent Role="Vaca">
+              <PropertyRef Name="FK_Vaca_IDRaca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ControleInseminacaoModel1StoreContainer">
+          <EntitySet Name="Bezerro" EntityType="Self.Bezerro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fazenda" EntityType="Self.Fazenda" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IDRaca" EntityType="Self.IDRaca" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inseminacao" EntityType="Self.Inseminacao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reprodutor" EntityType="Self.Reprodutor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vaca" EntityType="Self.Vaca" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Bezerro_IDRaca" Association="Self.FK_Bezerro_IDRaca">
+            <End Role="IDRaca" EntitySet="IDRaca" />
+            <End Role="Bezerro" EntitySet="Bezerro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bezerro_IDVaca" Association="Self.FK_Bezerro_IDVaca">
+            <End Role="Vaca" EntitySet="Vaca" />
+            <End Role="Bezerro" EntitySet="Bezerro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bezerro_Inseminacao" Association="Self.FK_Bezerro_Inseminacao">
+            <End Role="Inseminacao" EntitySet="Inseminacao" />
+            <End Role="Bezerro" EntitySet="Bezerro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bezerro_Reprodutor" Association="Self.FK_Bezerro_Reprodutor">
+            <End Role="Reprodutor" EntitySet="Reprodutor" />
+            <End Role="Bezerro" EntitySet="Bezerro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inseminacao_Fazenda" Association="Self.FK_Inseminacao_Fazenda">
+            <End Role="Fazenda" EntitySet="Fazenda" />
+            <End Role="Inseminacao" EntitySet="Inseminacao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inseminacao_Reprodutor" Association="Self.FK_Inseminacao_Reprodutor">
+            <End Role="Reprodutor" EntitySet="Reprodutor" />
+            <End Role="Inseminacao" EntitySet="Inseminacao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inseminacao_Vaca" Association="Self.FK_Inseminacao_Vaca">
+            <End Role="Vaca" EntitySet="Vaca" />
+            <End Role="Inseminacao" EntitySet="Inseminacao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rep_IDFazenda" Association="Self.FK_Rep_IDFazenda">
+            <End Role="Fazenda" EntitySet="Fazenda" />
+            <End Role="Reprodutor" EntitySet="Reprodutor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reprodutor_IDRaca" Association="Self.FK_Reprodutor_IDRaca">
+            <End Role="IDRaca" EntitySet="IDRaca" />
+            <End Role="Reprodutor" EntitySet="Reprodutor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vaca_IDFazenda" Association="Self.FK_Vaca_IDFazenda">
+            <End Role="Fazenda" EntitySet="Fazenda" />
+            <End Role="Vaca" EntitySet="Vaca" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vaca_IDRaca" Association="Self.FK_Vaca_IDRaca">
+            <End Role="IDRaca" EntitySet="IDRaca" />
+            <End Role="Vaca" EntitySet="Vaca" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ControleInseminacaoModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bezerro">
+          <Key>
+            <PropertyRef Name="IDBezerro" />
+          </Key>
+          <Property Name="Sexo" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="FK_Bezerro_IDRaca" Type="Int32" Nullable="false" />
+          <Property Name="DataNascimento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FK_Bezerro_IDIns" Type="Int32" Nullable="false" />
+          <Property Name="FK_Bezerro_IDRep" Type="Int32" Nullable="false" />
+          <Property Name="IDBezerro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_Bezerro_IDVaca" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="IDRaca" Relationship="Self.FK_Bezerro_IDRaca" FromRole="Bezerro" ToRole="IDRaca" />
+          <NavigationProperty Name="Vaca" Relationship="Self.FK_Bezerro_IDVaca" FromRole="Bezerro" ToRole="Vaca" />
+          <NavigationProperty Name="Inseminacao" Relationship="Self.FK_Bezerro_Inseminacao" FromRole="Bezerro" ToRole="Inseminacao" />
+          <NavigationProperty Name="Reprodutor" Relationship="Self.FK_Bezerro_Reprodutor" FromRole="Bezerro" ToRole="Reprodutor" />
+        </EntityType>
+        <EntityType Name="Fazenda">
+          <Key>
+            <PropertyRef Name="IDFazenda" />
+          </Key>
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDFazenda" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Inseminacao" Relationship="Self.FK_Inseminacao_Fazenda" FromRole="Fazenda" ToRole="Inseminacao" />
+          <NavigationProperty Name="Reprodutor" Relationship="Self.FK_Rep_IDFazenda" FromRole="Fazenda" ToRole="Reprodutor" />
+          <NavigationProperty Name="Vaca" Relationship="ControleInseminacaoModel1.FK_Vaca_IDFazenda" FromRole="Fazenda" ToRole="Vaca" />
+        </EntityType>
+        <EntityType Name="IDRaca">
+          <Key>
+            <PropertyRef Name="IDRaca1" />
+          </Key>
+          <Property Name="IDRaca1" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Bezerro" Relationship="Self.FK_Bezerro_IDRaca" FromRole="IDRaca" ToRole="Bezerro" />
+          <NavigationProperty Name="Reprodutor" Relationship="Self.FK_Reprodutor_IDRaca" FromRole="IDRaca" ToRole="Reprodutor" />
+          <NavigationProperty Name="Vaca" Relationship="Self.FK_Vaca_IDRaca" FromRole="IDRaca" ToRole="Vaca" />
+        </EntityType>
+        <EntityType Name="Inseminacao">
+          <Key>
+            <PropertyRef Name="IDInseminacao" />
+          </Key>
+          <Property Name="FK_Inseminacao_IDRep" Type="Int32" Nullable="false" />
+          <Property Name="FK_Inseminacao_IDFazenda" Type="Int32" Nullable="false" />
+          <Property Name="IDInseminacao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_Inseminacao_IDVaca" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bezerro" Relationship="Self.FK_Bezerro_Inseminacao" FromRole="Inseminacao" ToRole="Bezerro" />
+          <NavigationProperty Name="Fazenda" Relationship="Self.FK_Inseminacao_Fazenda" FromRole="Inseminacao" ToRole="Fazenda" />
+          <NavigationProperty Name="Reprodutor" Relationship="Self.FK_Inseminacao_Reprodutor" FromRole="Inseminacao" ToRole="Reprodutor" />
+          <NavigationProperty Name="Vaca" Relationship="Self.FK_Inseminacao_Vaca" FromRole="Inseminacao" ToRole="Vaca" />
+        </EntityType>
+        <EntityType Name="Reprodutor">
+          <Key>
+            <PropertyRef Name="IDRep" />
+          </Key>
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FK_Rep_IDRaca" Type="Int32" Nullable="false" />
+          <Property Name="FK_Rep_IDFazenda" Type="Int32" Nullable="false" />
+          <Property Name="IDRep" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Bezerro" Relationship="Self.FK_Bezerro_Reprodutor" FromRole="Reprodutor" ToRole="Bezerro" />
+          <NavigationProperty Name="Fazenda" Relationship="Self.FK_Rep_IDFazenda" FromRole="Reprodutor" ToRole="Fazenda" />
+          <NavigationProperty Name="IDRaca" Relationship="Self.FK_Reprodutor_IDRaca" FromRole="Reprodutor" ToRole="IDRaca" />
+          <NavigationProperty Name="Inseminacao" Relationship="Self.FK_Inseminacao_Reprodutor" FromRole="Reprodutor" ToRole="Inseminacao" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Vaca">
+          <Key>
+            <PropertyRef Name="IDVaca" />
+          </Key>
+          <Property Name="FK_Vaca_IDFazenda" Type="Int32" />
+          <Property Name="FK_Vaca_IDRaca" Type="Int32" Nullable="false" />
+          <Property Name="IDVaca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Bezerro" Relationship="Self.FK_Bezerro_IDVaca" FromRole="Vaca" ToRole="Bezerro" />
+          <NavigationProperty Name="IDRaca" Relationship="Self.FK_Vaca_IDRaca" FromRole="Vaca" ToRole="IDRaca" />
+          <NavigationProperty Name="Inseminacao" Relationship="Self.FK_Inseminacao_Vaca" FromRole="Vaca" ToRole="Inseminacao" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Fazenda" Relationship="ControleInseminacaoModel1.FK_Vaca_IDFazenda" FromRole="Vaca" ToRole="Fazenda" />
+        </EntityType>
+        <Association Name="FK_Bezerro_IDRaca">
+          <End Role="IDRaca" Type="Self.IDRaca" Multiplicity="1" />
+          <End Role="Bezerro" Type="Self.Bezerro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IDRaca">
+              <PropertyRef Name="IDRaca1" />
+            </Principal>
+            <Dependent Role="Bezerro">
+              <PropertyRef Name="FK_Bezerro_IDRaca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bezerro_IDVaca">
+          <End Role="Vaca" Type="Self.Vaca" Multiplicity="1" />
+          <End Role="Bezerro" Type="Self.Bezerro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vaca">
+              <PropertyRef Name="IDVaca" />
+            </Principal>
+            <Dependent Role="Bezerro">
+              <PropertyRef Name="FK_Bezerro_IDVaca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bezerro_Inseminacao">
+          <End Role="Inseminacao" Type="Self.Inseminacao" Multiplicity="1" />
+          <End Role="Bezerro" Type="Self.Bezerro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inseminacao">
+              <PropertyRef Name="IDInseminacao" />
+            </Principal>
+            <Dependent Role="Bezerro">
+              <PropertyRef Name="FK_Bezerro_IDIns" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bezerro_Reprodutor">
+          <End Role="Reprodutor" Type="Self.Reprodutor" Multiplicity="1" />
+          <End Role="Bezerro" Type="Self.Bezerro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reprodutor">
+              <PropertyRef Name="IDRep" />
+            </Principal>
+            <Dependent Role="Bezerro">
+              <PropertyRef Name="FK_Bezerro_IDRep" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inseminacao_Fazenda">
+          <End Role="Fazenda" Type="Self.Fazenda" Multiplicity="1" />
+          <End Role="Inseminacao" Type="Self.Inseminacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fazenda">
+              <PropertyRef Name="IDFazenda" />
+            </Principal>
+            <Dependent Role="Inseminacao">
+              <PropertyRef Name="FK_Inseminacao_IDFazenda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rep_IDFazenda">
+          <End Role="Fazenda" Type="Self.Fazenda" Multiplicity="1" />
+          <End Role="Reprodutor" Type="Self.Reprodutor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fazenda">
+              <PropertyRef Name="IDFazenda" />
+            </Principal>
+            <Dependent Role="Reprodutor">
+              <PropertyRef Name="FK_Rep_IDFazenda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reprodutor_IDRaca">
+          <End Role="IDRaca" Type="Self.IDRaca" Multiplicity="1" />
+          <End Role="Reprodutor" Type="Self.Reprodutor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IDRaca">
+              <PropertyRef Name="IDRaca1" />
+            </Principal>
+            <Dependent Role="Reprodutor">
+              <PropertyRef Name="FK_Rep_IDRaca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vaca_IDRaca">
+          <End Role="IDRaca" Type="Self.IDRaca" Multiplicity="1" />
+          <End Role="Vaca" Type="Self.Vaca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IDRaca">
+              <PropertyRef Name="IDRaca1" />
+            </Principal>
+            <Dependent Role="Vaca">
+              <PropertyRef Name="FK_Vaca_IDRaca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inseminacao_Reprodutor">
+          <End Role="Reprodutor" Type="Self.Reprodutor" Multiplicity="1" />
+          <End Role="Inseminacao" Type="Self.Inseminacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reprodutor">
+              <PropertyRef Name="IDRep" />
+            </Principal>
+            <Dependent Role="Inseminacao">
+              <PropertyRef Name="FK_Inseminacao_IDRep" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inseminacao_Vaca">
+          <End Role="Vaca" Type="Self.Vaca" Multiplicity="1" />
+          <End Role="Inseminacao" Type="Self.Inseminacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vaca">
+              <PropertyRef Name="IDVaca" />
+            </Principal>
+            <Dependent Role="Inseminacao">
+              <PropertyRef Name="FK_Inseminacao_IDVaca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ControleInseminacaoEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bezerro" EntityType="Self.Bezerro" />
+          <EntitySet Name="Fazenda" EntityType="Self.Fazenda" />
+          <EntitySet Name="IDRaca" EntityType="Self.IDRaca" />
+          <EntitySet Name="Inseminacao" EntityType="Self.Inseminacao" />
+          <EntitySet Name="Reprodutor" EntityType="Self.Reprodutor" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Vaca" EntityType="Self.Vaca" />
+          <AssociationSet Name="FK_Bezerro_IDRaca" Association="Self.FK_Bezerro_IDRaca">
+            <End Role="IDRaca" EntitySet="IDRaca" />
+            <End Role="Bezerro" EntitySet="Bezerro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bezerro_IDVaca" Association="Self.FK_Bezerro_IDVaca">
+            <End Role="Vaca" EntitySet="Vaca" />
+            <End Role="Bezerro" EntitySet="Bezerro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bezerro_Inseminacao" Association="Self.FK_Bezerro_Inseminacao">
+            <End Role="Inseminacao" EntitySet="Inseminacao" />
+            <End Role="Bezerro" EntitySet="Bezerro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bezerro_Reprodutor" Association="Self.FK_Bezerro_Reprodutor">
+            <End Role="Reprodutor" EntitySet="Reprodutor" />
+            <End Role="Bezerro" EntitySet="Bezerro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inseminacao_Fazenda" Association="Self.FK_Inseminacao_Fazenda">
+            <End Role="Fazenda" EntitySet="Fazenda" />
+            <End Role="Inseminacao" EntitySet="Inseminacao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rep_IDFazenda" Association="Self.FK_Rep_IDFazenda">
+            <End Role="Fazenda" EntitySet="Fazenda" />
+            <End Role="Reprodutor" EntitySet="Reprodutor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reprodutor_IDRaca" Association="Self.FK_Reprodutor_IDRaca">
+            <End Role="IDRaca" EntitySet="IDRaca" />
+            <End Role="Reprodutor" EntitySet="Reprodutor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vaca_IDRaca" Association="Self.FK_Vaca_IDRaca">
+            <End Role="IDRaca" EntitySet="IDRaca" />
+            <End Role="Vaca" EntitySet="Vaca" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inseminacao_Reprodutor" Association="Self.FK_Inseminacao_Reprodutor">
+            <End Role="Reprodutor" EntitySet="Reprodutor" />
+            <End Role="Inseminacao" EntitySet="Inseminacao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inseminacao_Vaca" Association="Self.FK_Inseminacao_Vaca">
+            <End Role="Vaca" EntitySet="Vaca" />
+            <End Role="Inseminacao" EntitySet="Inseminacao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vaca_IDFazenda" Association="ControleInseminacaoModel1.FK_Vaca_IDFazenda">
+            <End Role="Fazenda" EntitySet="Fazenda" />
+            <End Role="Vaca" EntitySet="Vaca" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_Vaca_IDFazenda">
+          <End Type="ControleInseminacaoModel1.Fazenda" Role="Fazenda" Multiplicity="0..1" />
+          <End Type="ControleInseminacaoModel1.Vaca" Role="Vaca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fazenda">
+              <PropertyRef Name="IDFazenda" />
+            </Principal>
+            <Dependent Role="Vaca">
+              <PropertyRef Name="FK_Vaca_IDFazenda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ControleInseminacaoModel1StoreContainer" CdmEntityContainer="ControleInseminacaoEntities1">
+          <EntitySetMapping Name="Bezerro">
+            <EntityTypeMapping TypeName="ControleInseminacaoModel1.Bezerro">
+              <MappingFragment StoreEntitySet="Bezerro">
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="FK_Bezerro_IDRaca" ColumnName="FK_Bezerro_IDRaca" />
+                <ScalarProperty Name="DataNascimento" ColumnName="DataNascimento" />
+                <ScalarProperty Name="FK_Bezerro_IDIns" ColumnName="FK_Bezerro_IDIns" />
+                <ScalarProperty Name="FK_Bezerro_IDRep" ColumnName="FK_Bezerro_IDRep" />
+                <ScalarProperty Name="IDBezerro" ColumnName="IDBezerro" />
+                <ScalarProperty Name="FK_Bezerro_IDVaca" ColumnName="FK_Bezerro_IDVaca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fazenda">
+            <EntityTypeMapping TypeName="ControleInseminacaoModel1.Fazenda">
+              <MappingFragment StoreEntitySet="Fazenda">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="IDFazenda" ColumnName="IDFazenda" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IDRaca">
+            <EntityTypeMapping TypeName="ControleInseminacaoModel1.IDRaca">
+              <MappingFragment StoreEntitySet="IDRaca">
+                <ScalarProperty Name="IDRaca1" ColumnName="IDRaca" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inseminacao">
+            <EntityTypeMapping TypeName="ControleInseminacaoModel1.Inseminacao">
+              <MappingFragment StoreEntitySet="Inseminacao">
+                <ScalarProperty Name="FK_Inseminacao_IDRep" ColumnName="FK_Inseminacao_IDRep" />
+                <ScalarProperty Name="FK_Inseminacao_IDFazenda" ColumnName="FK_Inseminacao_IDFazenda" />
+                <ScalarProperty Name="IDInseminacao" ColumnName="IDInseminacao" />
+                <ScalarProperty Name="FK_Inseminacao_IDVaca" ColumnName="FK_Inseminacao_IDVaca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reprodutor">
+            <EntityTypeMapping TypeName="ControleInseminacaoModel1.Reprodutor">
+              <MappingFragment StoreEntitySet="Reprodutor">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="FK_Rep_IDRaca" ColumnName="FK_Rep_IDRaca" />
+                <ScalarProperty Name="FK_Rep_IDFazenda" ColumnName="FK_Rep_IDFazenda" />
+                <ScalarProperty Name="IDRep" ColumnName="IDRep" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ControleInseminacaoModel1.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vaca">
+            <EntityTypeMapping TypeName="ControleInseminacaoModel1.Vaca">
+              <MappingFragment StoreEntitySet="Vaca">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="FK_Vaca_IDFazenda" ColumnName="FK_Vaca_IDFazenda" />
+                <ScalarProperty Name="FK_Vaca_IDRaca" ColumnName="FK_Vaca_IDRaca" />
+                <ScalarProperty Name="IDVaca" ColumnName="IDVaca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

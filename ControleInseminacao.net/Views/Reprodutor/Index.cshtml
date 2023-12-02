@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ControleInseminacao.net.Models.Reprodutor>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            Raça 
+        </th>
+        <th>
+            Fazenda
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDRep)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDRaca.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fazenda.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDRep)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {  id=item.IDRep }) |
+            @Html.ActionLink("Details", "Details", new { id = item.IDRep }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.IDRep })
+        </td>
+    </tr>
+}
+
+</table>
