@@ -1,4 +1,4 @@
-﻿@model ControleInseminacao.net.Models.Vaca
+@model ControleInseminacao.net.Models.Vaca
 
 @{
     ViewBag.Title = "Create";
@@ -18,19 +18,18 @@
     <div class="form-group">
         Fazenda
         <div class="col-md-10">
-            @Html.DropDownList("Fazenda", ViewBag.ListaFazendas as SelectList, "Selecione uma Fazenda", new { @class = "form-control" })
+            @Html.DropDownList("FK_Vaca_IDFazenda", ViewBag.ListaFazendas as SelectList, "Selecione uma Fazenda", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.FK_Vaca_IDFazenda, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
-        Raça
-        <div class="col-md-10">
-            @Html.DropDownList("Raça", ViewBag.ListaRacas as SelectList, "Selecione uma raça", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.FK_Vaca_IDRaca, "", new { @class = "text-danger" })
+        <div class="form-group">
+            Raça
+            <div class="col-md-10">
+                @Html.DropDownList("FK_VACA_IDRACA", ViewBag.ListaRacas as SelectList, "Selecione uma raça", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FK_Vaca_IDRaca, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-
 
     <div class="form-group">
         @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
